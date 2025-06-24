@@ -21,7 +21,7 @@ from autogen_core.memory import ListMemory, MemoryContent, MemoryMimeType
 # )
 model_client = OpenAIChatCompletionClient(
     model="Qwen/QwQ-32B",
-    api_key="sk-obamsnsjkryughmonriiqmrdomvnkqoarrajpilucpiojvlm",
+    api_key="[Your-API-Key]",
     base_url="https://api.siliconflow.cn/v1",
     model_info={
         "vision": False,

@@ -21,7 +21,7 @@ from autogen_core.memory import ListMemory, MemoryContent, MemoryMimeType
 # )
 model_client = OpenAIChatCompletionClient(
     model="Qwen/QwQ-32B",
-    api_key="[Your-API-Key]",
+    api_key="sk-obamsnsjkryughmonriiqmrdomvnkqoarrajpilucpiojvlm",
     base_url="https://api.siliconflow.cn/v1",
     model_info={
         "vision": False,
@@ -230,34 +230,34 @@ async def main():
     # 实现一个RobinGroup团队，功能自选。  （实现√）
     # 至少包含3个Agent，需使用工具调用。  （实现√）
     # 团队需展示协作效果。    （实现√）
-    await Console(team.run_stream(task="幫我分析一下我买iphone16pro好还是iphone17好，给我一个建议"))  # Stream the messages to the console.
+    # await Console(team.run_stream(task="幫我分析一下我买iphone16pro好还是iphone17好，给我一个建议"))  # Stream the messages to the console.
     
     # ++++++  Get Grade 70 （自测） ----------------------------------------------------------------------
     # 实现单个任务状态的保存与加载功能。 （实现√）
     # 需支持任务中断后恢复。  （实现√）
     # sava state ---------------------------------------------------------------------------
-    agent_state = await team.save_state()
-    with open("agent_state.json", "w", encoding="utf-8") as f:
-        json.dump(agent_state, f, ensure_ascii=False, indent=2, default=str)
-    print(" Agent 状态已保存到 agent_state.json")
+    # agent_state = await team.save_state()
+    # with open("agent_state.json", "w", encoding="utf-8") as f:
+    #     json.dump(agent_state, f, ensure_ascii=False, indent=2, default=str)
+    # print(" Agent 状态已保存到 agent_state.json")
     
     # load state ----------------------------------------------------------------------
     
-    with open("agent_state.json", "r", encoding="utf-8") as f:
-        team_state = json.load(f)
+    # with open("agent_state.json", "r", encoding="utf-8") as f:
+    #     team_state = json.load(f)
 
-    new_team = SelectorGroupChat(
-        [begin_agent, after_agent],
-        model_client=model_client,
-        termination_condition=termination,
-        allow_repeated_speaker=True,
-    )
+    # new_team = SelectorGroupChat(
+    #     [begin_agent, after_agent],
+    #     model_client=model_client,
+    #     termination_condition=termination,
+    #     allow_repeated_speaker=True,
+    # )
 
-    await new_team.load_state(team_state)
+    # await new_team.load_state(team_state)
 
-    stream = new_team.run_stream(task="請問上一個回答你說到了什麼？")
-    await Console(stream)
-    await model_client.close()
+    # stream = new_team.run_stream(task="請問上一個回答你說到了什麼？")
+    # await Console(stream)
+    # await model_client.close()
 
     # ++++++  Get Grade 80 （自测）----------------------------------------------------------------------
     # 实现一个Swarm团队，功能自选。（实现√）
@@ -266,15 +266,15 @@ async def main():
     # Swarm-Team ----------------------------------------------------------------------
 
     # ========== 终止条件 ==========
-    termination = SourceMatchTermination(["after_agent"]) | TextMentionTermination("感谢咨询")
+    # termination = SourceMatchTermination(["after_agent"]) | TextMentionTermination("感谢咨询")
     
 
     # ========== Swarm团队 ==========
-    team = Swarm([begin_agent, info_agent, after_agent], termination_condition=termination)
+    # team = Swarm([begin_agent, info_agent, after_agent], termination_condition=termination)
     
-    await Console(team.run_stream(
-        task="我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？"
-    ))
+    # await Console(team.run_stream(
+    #     task="我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？"
+    # ))
 
     # ++++++  Get Grade 90 （自测）----------------------------------------------------------------------
     # Q1 实现官方GraphFlow团队接口，完成官方案例即可。  （实现√）
@@ -296,24 +296,22 @@ async def main():
     # Q2 数据库状态管理
     # 使用数据库管理任务历史状态与消息。  （实现√）
     # 需支持查询与更新。  （实现√）
-    db = DBManager()
+    # db = DBManager()
     # 创建一个任务
-    task_id = db.create_task("iPhone 选购咨询", status="in_progress")
+    # task_id = db.create_task("iPhone 选购咨询", status="in_progress")
 
     # 开始运行
-    result = await Console(team.run_stream(task="我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？"))
+    # result = await Console(team.run_stream(task="我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？"))
 
     # 保存消息
-    db.add_message(task_id, "user", "我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？")
-    db.add_message(task_id, "assistant", str(result))
+    # db.add_message(task_id, "user", "我想了解一下iPhone17和iPhone16Pro，哪个更值得买？有现货吗？售后怎么样？")
+    # db.add_message(task_id, "assistant", str(result))
     # 更新状态
-    db.update_task_status(task_id, "completed")
+    # db.update_task_status(task_id, "completed")
 
     #  Q3 Agent Memory能力
     # 根据官方文档为单Agent添加Memory能力。
     # 需展示记忆功能效果。
-
-    # 预估得分95分 
   
 
 
